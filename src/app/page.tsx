@@ -1,7 +1,7 @@
-export default function Home() {
-  return (
-    <main>
-      <p>Hallo Welt!</p>
-    </main>
-  )
+export default async function Home() {
+    return (
+        <main>
+            <h1>Hallo Welt!</h1>
+        </main>
+    )
 }

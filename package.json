@@ -6,10 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrations:generate": "drizzle-kit generate:sqlite --config=drizzle.config.ts",
+    "migrations:push": "drizzle-kit push:sqlite --config=drizzle.config.ts",
+    "migrations:drop": "drizzle-kit drop"
   },
   "dependencies": {
+    "@auth/core": "^0.23.0",
+    "@auth/drizzle-adapter": "^0.3.17",
+    "@types/better-sqlite3": "^7.6.8",
+    "better-sqlite3": "^9.3.0",
+    "dotenv": "^16.4.1",
+    "drizzle-orm": "^0.29.3",
     "next": "^14.1.0",
+    "next-auth": "^5.0.0-beta.5",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -17,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "drizzle-kit": "^0.20.13",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -24,6 +35,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemailer": "^6.9.8",
     "prettier": "^3.2.2",
     "typescript": "^5"
   }

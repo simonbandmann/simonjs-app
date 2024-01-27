@@ -4,7 +4,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: rgb(17, 17, 17);
+    --background: 17, 17, 17;
     --foreground: white;
   }
 }
@@ -21,11 +21,30 @@ body {
   overflow-x: hidden;
 }
 
+button {
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  font: inherit;
+}
+
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-style);
   min-height: 100vh;
+  font-size: 16px;
+  position: relative;
 }
 
 a {
@@ -37,4 +56,119 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.container {
+  padding: 1rem 2rem;
+  margin: auto;
+  max-width: 1280px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  height: 96px;
+  background-color: rgba(var(--background), 0.8);
+  padding: 0 2rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .header {
+    justify-content: start;
+    align-items: center;
+    height: 130px;
+  }
+}
+
+.navigation-wrapper {
+  width: 100%;
+}
+
+.navigation-container {
+  display: flex;
+  position: fixed;
+  top:0;
+  right: 0;
+  bottom: 0;
+  width: 85vw;
+  z-index: 10;
+  transform: translateX(100%);
+  background-color: rgb(var(--background));
+  transition: transform 350ms ease-out;
+}
+
+@media only screen and (min-width: 600px) {
+  .navigation-container {
+    width: unset;
+    position: relative;
+    transform: unset;
+    inset: unset;
+    justify-content: end;
+  }
+}
+
+.navigation-container[data-open="true"] {
+  display: block;
+  transform: translateX(0);
+}
+
+.navigation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 6rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .navigation-list {
+    flex-direction: row;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.navigation-list-item {
+  font-weight: 900;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(96, 96, 129, 0.2);
+  padding: 1rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .navigation-list-item {
+    background-color: transparent;
+  }
+}
+
+.mobile-navigation-toggle {
+  display: block;
+  position: absolute;
+  z-index: 9999;
+  top: 32px;
+  right: 32px;
+  width: 32px;
+  aspect-ratio: 1;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobile-navigation-toggle {
+    display: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }
