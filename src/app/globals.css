@@ -5,7 +5,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: 17, 17, 17;
-    --foreground: white;
+    --foreground: 255, 255, 255;
   }
 }
 
@@ -39,8 +39,8 @@ li {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
   font-family: var(--font-style);
   min-height: 100vh;
   font-size: 16px;
@@ -66,12 +66,13 @@ a {
 
 .header {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
   height: 96px;
-  background-color: rgba(var(--background), 0.8);
+  background-color: rgb(var(--background));
   padding: 0 2rem;
+  border-bottom: 1px solid rgb(var(--foreground), 0.1);
 }
 
 @media only screen and (min-width: 600px) {
@@ -79,6 +80,8 @@ a {
     justify-content: start;
     align-items: center;
     height: 130px;
+    padding: 1rem;
+    gap: 1rem;
   }
 }
 
@@ -95,8 +98,8 @@ a {
   width: 85vw;
   z-index: 10;
   transform: translateX(100%);
-  background-color: rgb(var(--background));
   transition: transform 350ms ease-out;
+  background-color: rgb(var(--background));
 }
 
 @media only screen and (min-width: 600px) {
@@ -105,7 +108,8 @@ a {
     position: relative;
     transform: unset;
     inset: unset;
-    justify-content: end;
+    justify-content: center;
+    background-color: transparent;
   }
 }
 
@@ -123,8 +127,8 @@ a {
 
 @media only screen and (min-width: 600px) {
   .navigation-list {
+    padding-top: 0;
     flex-direction: row;
-    padding: 1rem;
     align-items: center;
     justify-content: center;
   }
