@@ -6,7 +6,7 @@ import { useClickOutside } from '@/hooks/useClickOutside'
 import { Bars, Close } from '@/assets/icons'
 
 type NavigationMenuProps = {
-    user:
+    user?:
         | { name?: string | null; email?: string | null; image?: string | null }
         | undefined
 }
@@ -26,7 +26,6 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
 
     return (
         <div>
-            {user ? <pre>{JSON.stringify(user)}</pre> : null}
             <header className='header'>
                 <h1>Logo</h1>
                 <div ref={ref} className='navigation-wrapper'>
@@ -42,6 +41,12 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                                 text='Login'
                                 href='/api/auth/signin'
                             />
+                            {user && (
+                                <NavigationItem
+                                    text='Dashboard'
+                                    href='/dashboard'
+                                />
+                            )}
                         </ul>
                     </nav>
 

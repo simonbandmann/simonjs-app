@@ -7,6 +7,7 @@ export const users = sqliteTable('user', {
     email: text('email').notNull(),
     emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
     image: text('image'),
+    isAdmin: integer('isAdmin', { mode: 'boolean' }).default(false),
 })
 
 export const accounts = sqliteTable(
@@ -52,3 +53,10 @@ export const verificationTokens = sqliteTable(
         compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
     }),
 )
+
+export const products = sqliteTable('product', {
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    name: text('name'),
+    image: text('image', { mode: 'json' }).$type<string[]>(),
+    description: text('description'),
+})
