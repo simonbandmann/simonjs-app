@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { Bars, Close } from '@/assets/icons'
+import { NAV_ITEMS } from '@/lib/constants'
 
 type NavigationMenuProps = {
     user?:
@@ -24,6 +25,16 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
 
     const [ref] = useClickOutside(onMenuClose)
 
+    const handleCloseNav = () => {
+        setOpen(false)
+    }
+
+    const hasAuth = !!user
+
+    const navItemsToRender = hasAuth
+        ? NAV_ITEMS
+        : NAV_ITEMS.filter(({ requireAuth }) => !requireAuth)
+
     return (
         <div>
             <header className='header'>
@@ -35,18 +46,14 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                         data-open={open}
                     >
                         <ul className='navigation-list'>
-                            <NavigationItem text='Home' href='/' />
-                            <NavigationItem text='Shop' href='/shop' />
-                            <NavigationItem
-                                text='Login'
-                                href='/api/auth/signin'
-                            />
-                            {user && (
+                            {navItemsToRender.map(({ text, href }) => (
                                 <NavigationItem
-                                    text='Dashboard'
-                                    href='/dashboard'
+                                    key={text}
+                                    text={text}
+                                    href={href}
+                                    onClose={handleCloseNav}
                                 />
-                            )}
+                            ))}
                         </ul>
                     </nav>
 
@@ -65,9 +72,17 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
     )
 }
 
-const NavigationItem = ({ text, href }: { text: string; href: string }) => {
+const NavigationItem = ({
+    text,
+    href,
+    onClose,
+}: {
+    text: string
+    href: string
+    onClose?: () => void
+}) => {
     return (
-        <Link href={href}>
+        <Link href={href} onClick={onClose}>
             <li className='navigation-list-item'>{text}</li>
         </Link>
     )
