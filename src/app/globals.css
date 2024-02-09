@@ -80,7 +80,7 @@ a {
   border-bottom: 1px solid rgb(var(--foreground), 0.1);
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .header {
     justify-content: start;
     align-items: center;
@@ -96,12 +96,23 @@ a {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   font-size: 1.5rem;
   font-weight: 900;
   text-transform: uppercase;
 }
 
+.logo-img {
+  position: relative;
+  width: 64px;
+  aspect-ratio: 1/1;
+}
+
 .navigation-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -119,7 +130,7 @@ a {
   background-color: rgb(var(--background));
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .navigation-container {
     width: unset;
     position: relative;
@@ -145,7 +156,7 @@ a {
   padding-top: 6rem;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .navigation-list {
     padding-top: 0;
     flex-direction: row;
@@ -164,7 +175,7 @@ a {
   padding: 1rem;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .navigation-list-item {
     background-color: transparent;
   }
@@ -180,7 +191,7 @@ a {
   z-index: 999;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .mobile-navigation-toggle {
     display: none;
   }
@@ -288,7 +299,7 @@ a {
   width: 90vw;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   .dialog-content {
     max-width: 680px;
   }
