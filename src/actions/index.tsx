@@ -6,6 +6,8 @@ import { products } from '@/lib/db/schema'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { revalidatePath } from 'next/cache'
 import path from 'path'
+import { signOut as nexAuthSignOut } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 type StoreItem = typeof products.$inferInsert
 
@@ -50,4 +52,10 @@ export const addStoreItem = async (formData: FormData) => {
 
     await db.insert(products).values(item)
     revalidatePath('/dashboard')
+}
+
+export const signOut = async () => {
+    await nexAuthSignOut()
+    revalidatePath('/')
+    redirect('/')
 }

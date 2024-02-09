@@ -9,7 +9,7 @@ const AddItemDialog = () => {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <Dialog.Trigger className='base-button'>Add</Dialog.Trigger>
+            <Dialog.Trigger className='button-base'>Add</Dialog.Trigger>
             <Dialog.Content title='Add product to store'>
                 <AddStoreItemForm onClose={() => setOpen(false)} />
             </Dialog.Content>

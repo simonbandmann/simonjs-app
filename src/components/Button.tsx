@@ -6,7 +6,7 @@ interface InputProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ children, ...props }: InputProps) => {
     return (
-        <button className='base-button' {...props}>
+        <button className='button-base' {...props}>
             {children}
         </button>
     )

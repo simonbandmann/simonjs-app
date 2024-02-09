@@ -2,8 +2,10 @@ import NextAuth from 'next-auth'
 import Email from 'next-auth/providers/email'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { db } from '../db'
+import { users } from '../db/schema'
+import { eq } from 'drizzle-orm'
 
-export const { handlers, auth } = NextAuth({
+export const { handlers, auth, signOut } = NextAuth({
     adapter: DrizzleAdapter(db),
     providers: [
         Email({
@@ -18,4 +20,15 @@ export const { handlers, auth } = NextAuth({
             from: process.env.EMAIL_FROM,
         }),
     ],
+    callbacks: {
+        signIn: async ({ user }) => {
+            if (user?.email) {
+                const dbUser = await db.query.users.findFirst({
+                    where: eq(users.email, user.email),
+                })
+                if (dbUser?.isAdmin) return true
+            }
+            return false
+        },
+    },
 })

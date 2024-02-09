@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { Bars, Close } from '@/assets/icons'
 import { NAV_ITEMS } from '@/lib/constants'
+import { signOut } from '@/actions'
+import { usePathname } from 'next/navigation'
 
 type NavigationMenuProps = {
     user?:
@@ -14,6 +16,7 @@ type NavigationMenuProps = {
 
 const NavigationMenu = ({ user }: NavigationMenuProps) => {
     const [open, setOpen] = useState(false)
+    const pathname = usePathname()
 
     const onMenuToggle = () => {
         setOpen((prev) => !prev)
@@ -25,47 +28,81 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
 
     const [ref] = useClickOutside(onMenuClose)
 
+    useEffect(() => {
+        handleCloseNav()
+    }, [pathname])
+
     const handleCloseNav = () => {
         setOpen(false)
     }
 
     const hasAuth = !!user
 
-    const navItemsToRender = hasAuth
-        ? NAV_ITEMS
-        : NAV_ITEMS.filter(({ requireAuth }) => !requireAuth)
+    const navItemsToRender = useMemo(() => {
+        return hasAuth
+            ? NAV_ITEMS
+            : NAV_ITEMS.filter(({ requireAuth }) => !requireAuth)
+    }, [hasAuth])
 
     return (
         <div>
             <header className='header'>
-                <h1>Logo</h1>
-                <div ref={ref} className='navigation-wrapper'>
-                    <nav
-                        id='primary-navigation'
-                        className='navigation-container'
-                        data-open={open}
-                    >
-                        <ul className='navigation-list'>
-                            {navItemsToRender.map(({ text, href }) => (
-                                <NavigationItem
-                                    key={text}
-                                    text={text}
-                                    href={href}
-                                    onClose={handleCloseNav}
-                                />
-                            ))}
-                        </ul>
-                    </nav>
+                <div className='top-container'>
+                    <div className='logo-container'>
+                        <Link href='/' className='logo'>
+                            Logo
+                        </Link>
+                    </div>
 
-                    <button
-                        onClick={onMenuToggle}
-                        className='mobile-navigation-toggle'
-                        aria-controls='primary-navigation'
-                        aria-expanded={open}
-                    >
-                        {open ? <Close /> : <Bars />}
-                        <span className='sr-only'>Menu</span>
-                    </button>
+                    <div ref={ref} className='navigation-wrapper'>
+                        <nav
+                            id='primary-navigation'
+                            className='navigation-container'
+                            data-open={open}
+                        >
+                            <ul className='navigation-list'>
+                                {navItemsToRender.map(({ text, href }) => (
+                                    <NavigationItem
+                                        key={text}
+                                        text={text}
+                                        href={href}
+                                    />
+                                ))}
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div className='top-right-container'>
+                        <div className='profile-container'>
+                            {user ? (
+                                <button
+                                    onClick={async () => {
+                                        await signOut()
+                                    }}
+                                    className='button-base profile-button'
+                                >
+                                    Logout
+                                </button>
+                            ) : (
+                                <Link
+                                    href='/api/auth/signin'
+                                    className='button-base profile-button'
+                                >
+                                    Login
+                                </Link>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={onMenuToggle}
+                            className='mobile-navigation-toggle'
+                            aria-controls='primary-navigation'
+                            aria-expanded={open}
+                        >
+                            {open ? <Close /> : <Bars />}
+                            <span className='sr-only'>Menu</span>
+                        </button>
+                    </div>
                 </div>
             </header>
         </div>
