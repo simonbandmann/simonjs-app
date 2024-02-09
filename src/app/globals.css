@@ -101,12 +101,20 @@ a {
   font-size: 1.5rem;
   font-weight: 900;
   text-transform: uppercase;
+  gap: 0.8rem;
 }
 
 .logo-img {
   position: relative;
-  width: 64px;
-  aspect-ratio: 1/1;
+  width: 48px;
+  height: 48px;
+}
+
+@media only screen and (min-width: 800px) {
+  .logo-img {
+    width: 64px;
+    height: 64px;
+  }
 }
 
 .navigation-wrapper {

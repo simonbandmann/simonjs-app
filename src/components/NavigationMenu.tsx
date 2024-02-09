@@ -7,7 +7,7 @@ import { Bars, Close } from '@/assets/icons'
 import { NAV_ITEMS } from '@/lib/constants'
 import { signOut } from '@/actions'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
+import { Logo } from '@/assets/logos'
 
 type NavigationMenuProps = {
     user?:
@@ -51,13 +51,7 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                 <div className='top-container'>
                     <div className='logo-container'>
                         <Link href='/' className='logo'>
-                            <div className='logo-img'>
-                                <Image
-                                    src='/simonjs_logo.svg'
-                                    alt='Blitz mit einem Farbverlauf'
-                                    fill
-                                />
-                            </div>
+                            <Logo className='logo-img' />
                             <div>Logo</div>
                         </Link>
                     </div>
