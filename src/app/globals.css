@@ -173,11 +173,11 @@ a {
 .mobile-navigation-toggle {
   display: block;
   /* position: absolute; */
-  z-index: 9999;
   top: 32px;
   right: 32px;
   width: 32px;
   aspect-ratio: 1;
+  z-index: 999;
 }
 
 @media only screen and (min-width: 600px) {
@@ -281,7 +281,7 @@ a {
   transform: translate(-50%, -50%);
   background-color: rgb(var(--background));
   padding: 2rem;
-  z-index: 99;
+  z-index: 9999;
   border-radius: var(--border-radius);
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid rgb(var(--foreground), 0.1);
