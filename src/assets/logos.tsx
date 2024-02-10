@@ -7,14 +7,19 @@ export const Logo = ({ className }: { className?: string }) => (
         className={className}
         xmlns='http://www.w3.org/2000/svg'
     >
-        <path
-            d='M163.704 240.665L0 256.136L118.485 128.068L236.97 0L163.704 240.665Z'
-            fill='url(#paint0_linear_321_36)'
-        />
-        <path
-            d='M90.6901 219.335L254.394 203.864L135.909 331.932L17.4241 460L90.6901 219.335Z'
-            fill='url(#paint1_linear_321_36)'
-        />
+        <g id='logo-top' className='logo-top'>
+            <path
+                d='M163.704 240.665L0 256.136L118.485 128.068L236.97 0L163.704 240.665Z'
+                fill='url(#paint0_linear_321_36)'
+            />
+        </g>
+        <g id='logo-bottom' className='logo-bottom'>
+            <path
+                d='M90.6901 219.335L254.394 203.864L135.909 331.932L17.4241 460L90.6901 219.335Z'
+                fill='url(#paint1_linear_321_36)'
+            />
+        </g>
+
         <defs>
             <linearGradient
                 id='paint0_linear_321_36'

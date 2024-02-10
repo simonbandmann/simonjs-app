@@ -52,7 +52,7 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                     <div className='logo-container'>
                         <Link href='/' className='logo'>
                             <Logo className='logo-img' />
-                            <div>Logo</div>
+                            <div className='logo-text'>Simon.js</div>
                         </Link>
                     </div>
 
