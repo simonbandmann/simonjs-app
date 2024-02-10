@@ -35,7 +35,7 @@ export default async function Page() {
                             {item.image?.map((img, index) => (
                                 <Image
                                     key={index}
-                                    src={`/static/images/${img}`}
+                                    src={img}
                                     alt='alt'
                                     width={200}
                                     height={200}

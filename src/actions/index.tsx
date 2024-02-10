@@ -3,17 +3,44 @@
 import { sleep } from '@/helpers'
 import { db } from '@/lib/db'
 import { products } from '@/lib/db/schema'
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { revalidatePath } from 'next/cache'
-import path from 'path'
 import { signOut as nexAuthSignOut } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
 type StoreItem = typeof products.$inferInsert
+
+const s3Client = new S3Client({
+    region: process.env.NEXT_AWS_S3_REGION as string,
+    credentials: {
+        accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID as string,
+        secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY as string,
+    },
+})
 
 export const getStoreItems = async () => {
     await sleep(500)
     return db.select().from(products)
+}
+
+async function uploadFileToS3(file: Buffer, fileName: string) {
+    const fileBuffer = file
+
+    const params = {
+        Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME as string,
+        Key: `${fileName}`,
+        Body: fileBuffer,
+        ContentType: 'image/png',
+    }
+
+    const command = new PutObjectCommand(params)
+
+    try {
+        const response = await s3Client.send(command)
+        console.log('file uploaded successfully:', response)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export const addStoreItem = async (formData: FormData) => {
@@ -21,27 +48,21 @@ export const addStoreItem = async (formData: FormData) => {
     const description = formData.get('description') as string
     const imageFile = formData.get('image') as File
 
-    let imagesToInsert: string[] = []
+    const fileData: { url?: string } = {}
+    const imagesToInsert: string[] = []
 
     if (imageFile.size > 0) {
-        const relativeDirectory = 'static/images'
-        const fileName = `${Date.now()}_original_${imageFile.name}`
-        const uploadDirectory = path.join(
-            process.cwd(),
-            'public',
-            relativeDirectory,
-        )
-        const bytes = await imageFile.arrayBuffer()
-        const buffer = Buffer.from(bytes)
+        const { name: fileName } = imageFile
+        const buffer = Buffer.from(await imageFile.arrayBuffer())
+        const baseUrl: string = `https://${process.env.NEXT_AWS_S3_BUCKET_NAME}.s3.${process.env.NEXT_AWS_S3_REGION}.amazonaws.com/`
 
-        if (!existsSync(uploadDirectory)) {
-            mkdirSync(uploadDirectory)
+        try {
+            await uploadFileToS3(buffer, fileName)
+            fileData.url = baseUrl + fileName
+            imagesToInsert.push(fileData.url)
+        } catch {
+            //
         }
-
-        const originalImagePath = path.join(uploadDirectory, fileName)
-        writeFileSync(originalImagePath, buffer)
-
-        imagesToInsert.push(fileName)
     }
 
     const item: StoreItem = {
