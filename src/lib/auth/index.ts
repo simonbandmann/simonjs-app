@@ -1,5 +1,5 @@
 import NextAuth from 'next-auth'
-import Email from 'next-auth/providers/email'
+import EmailProvider from 'next-auth/providers/nodemailer'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { db } from '../db'
 import { users } from '../db/schema'
@@ -8,7 +8,7 @@ import { eq } from 'drizzle-orm'
 export const { handlers, auth, signOut } = NextAuth({
     adapter: DrizzleAdapter(db),
     providers: [
-        Email({
+        EmailProvider({
             server: {
                 host: process.env.EMAIL_HOST,
                 port: Number(process.env.EMAIL_PORT),
