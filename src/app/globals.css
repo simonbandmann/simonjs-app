@@ -312,7 +312,7 @@ a {
   resize: none;
 }
 
-.button-base {
+.button {
   font-family: unset;
   font-size: unset;
   color: rgb(var(--contrast-text));
@@ -320,10 +320,17 @@ a {
   padding: 0.8rem 1.5rem;
   border-radius: 0.5rem;
   border: none;
+}
+
+.button-base {
+  border: 1px solid rgba(var(--foreground), 0.5);
+}
+
+.button-primary {
   background-color: rgba(var(--primary), 1);
 }
 
-.button-base:hover {
+.button-primary:hover {
   background-color: rgba(var(--primary), 0.8);
 }
 
@@ -372,3 +379,31 @@ a {
   top: 1.5rem;
   right: 1.5rem;
 }
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-item-element {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgb(var(--foreground), 0.1);
+  padding: 1rem;
+  overflow: hidden;
+  gap: 8px;
+}
+
+.dashboard-item-title {
+  font-weight: 900;
+}
+
+.dashboard-item-description {
+  font-size: 0.8rem;
+}
+
+.edit-dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+

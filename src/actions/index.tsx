@@ -7,8 +7,9 @@ import { revalidatePath } from 'next/cache'
 import { signOut as nexAuthSignOut } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { eq } from 'drizzle-orm'
 
-type StoreItem = typeof products.$inferInsert
+export type StoreItem = typeof products.$inferInsert
 
 const s3Client = new S3Client({
     region: process.env.NEXT_AWS_S3_REGION as string,
@@ -19,28 +20,8 @@ const s3Client = new S3Client({
 })
 
 export const getStoreItems = async () => {
-    await sleep(500)
+    await sleep(1000)
     return db.select().from(products)
-}
-
-async function uploadFileToS3(file: Buffer, fileName: string) {
-    const fileBuffer = file
-
-    const params = {
-        Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME as string,
-        Key: `${fileName}`,
-        Body: fileBuffer,
-        ContentType: 'image/png',
-    }
-
-    const command = new PutObjectCommand(params)
-
-    try {
-        const response = await s3Client.send(command)
-        console.log('file uploaded successfully:', response)
-    } catch (error) {
-        console.log(error)
-    }
 }
 
 export const addStoreItem = async (formData: FormData) => {
@@ -75,8 +56,38 @@ export const addStoreItem = async (formData: FormData) => {
     revalidatePath('/dashboard')
 }
 
+export const updateStoreItem = async (id: number, name: string) => {
+    await db.update(products).set({ name }).where(eq(products.id, id))
+    revalidatePath('/dashboard')
+}
+
+export const deleteStoreItem = async (id: number) => {
+    await db.delete(products).where(eq(products.id, id))
+    revalidatePath('/dashboard')
+}
+
 export const signOut = async () => {
     await nexAuthSignOut()
     revalidatePath('/')
     redirect('/')
+}
+
+async function uploadFileToS3(file: Buffer, fileName: string) {
+    const fileBuffer = file
+
+    const params = {
+        Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME as string,
+        Key: `${fileName}`,
+        Body: fileBuffer,
+        ContentType: 'image/png',
+    }
+
+    const command = new PutObjectCommand(params)
+
+    try {
+        const response = await s3Client.send(command)
+        console.log('file uploaded successfully:', response)
+    } catch (error) {
+        console.log(error)
+    }
 }

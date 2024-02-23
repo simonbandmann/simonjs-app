@@ -81,14 +81,14 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                                     onClick={async () => {
                                         await signOut()
                                     }}
-                                    className='button-base profile-button'
+                                    className='button button-primary profile-button'
                                 >
                                     Logout
                                 </button>
                             ) : (
                                 <Link
                                     href='/api/auth/signin'
-                                    className='button-base profile-button'
+                                    className='button button-primary profile-button'
                                 >
                                     Login
                                 </Link>

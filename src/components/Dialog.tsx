@@ -9,9 +9,9 @@ const Dialog = ({
     onOpenChange,
     children,
 }: {
-    open: boolean
+    open?: boolean
     // eslint-disable-next-line no-unused-vars
-    onOpenChange: (open: boolean) => void
+    onOpenChange?: (open: boolean) => void
     children: ReactNode
 }) => {
     return (
@@ -45,6 +45,7 @@ const Content = ({
     )
 }
 
+Dialog.Close = RadixDialog.Close
 Dialog.Trigger = RadixDialog.Trigger
 Dialog.Content = Content
 

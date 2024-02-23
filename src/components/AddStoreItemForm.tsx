@@ -39,7 +39,9 @@ const AddStoreItemForm = ({ onClose }: { onClose: () => void }) => {
                 Image
             </label>
             <input id='image' name='image' type='file' accept='/image/*' />
-            <Button type='submit'>Add product</Button>
+            <Button type='submit' variant='primary'>
+                Add product
+            </Button>
         </form>
     )
 }
