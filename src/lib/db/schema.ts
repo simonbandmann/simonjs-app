@@ -60,3 +60,10 @@ export const products = sqliteTable('product', {
     image: text('image', { mode: 'json' }).$type<string[]>(),
     description: text('description'),
 })
+
+export const posts = sqliteTable('posts', {
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    name: text('name'),
+    images: text('images', { mode: 'json' }).$type<string[]>(),
+    content: text('content'),
+})

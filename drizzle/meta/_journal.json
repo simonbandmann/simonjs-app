@@ -43,6 +43,13 @@
       "when": 1706526710349,
       "tag": "0005_massive_black_bolt",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1708896943472,
+      "tag": "0006_mean_cerise",
+      "breakpoints": true
     }
   ]
 }
