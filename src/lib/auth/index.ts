@@ -1,12 +1,14 @@
-import NextAuth from 'next-auth'
-import EmailProvider from 'next-auth/providers/nodemailer'
+import { db } from '@/lib/db'
+import { users } from '@/lib/db/schema'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { db } from '../db'
-import { users } from '../db/schema'
 import { eq } from 'drizzle-orm'
+import EmailProvider from 'next-auth/providers/email'
+import type { Adapter } from 'next-auth/adapters'
+import { AuthOptions } from 'next-auth'
 
-export const { handlers, auth, signOut } = NextAuth({
-    adapter: DrizzleAdapter(db),
+export const authOptions: AuthOptions = {
+    adapter: DrizzleAdapter(db) as Adapter,
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         EmailProvider({
             server: {
@@ -31,4 +33,4 @@ export const { handlers, auth, signOut } = NextAuth({
             return false
         },
     },
-})
+}

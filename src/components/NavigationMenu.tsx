@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { Bars, Close } from '@/assets/icons'
 import { NAV_ITEMS } from '@/lib/constants'
-import { signOut } from '@/actions'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/assets/logos'
+import { signOut } from 'next-auth/react'
 
 type NavigationMenuProps = {
     user?:
@@ -78,8 +78,8 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                         <div className='profile-container'>
                             {user ? (
                                 <button
-                                    onClick={async () => {
-                                        await signOut()
+                                    onClick={() => {
+                                        signOut()
                                     }}
                                     className='button button-primary profile-button'
                                 >

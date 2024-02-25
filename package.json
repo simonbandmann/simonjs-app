@@ -12,7 +12,6 @@
     "migrations:drop": "drizzle-kit drop"
   },
   "dependencies": {
-    "@auth/core": "^0.27.0",
     "@auth/drizzle-adapter": "^0.7.0",
     "@aws-sdk/client-s3": "^3.521.0",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -22,7 +21,7 @@
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.29.4",
     "next": "^14.1.0",
-    "next-auth": "^5.0.0-beta.13",
+    "next-auth": "^4.24.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

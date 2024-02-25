@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ReactNode } from 'react'
-import { auth } from '@/lib/auth'
 import NavigationMenu from '@/components/NavigationMenu'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export const metadata: Metadata = {
     title: 'SimonJS',
@@ -14,7 +15,7 @@ export default async function RootLayout({
 }: {
     children: ReactNode
 }) {
-    const session = await auth()
+    const session = await getServerSession(authOptions)
     const user = session?.user
 
     return (

@@ -4,8 +4,6 @@ import { sleep } from '@/helpers'
 import { db } from '@/lib/db'
 import { products } from '@/lib/db/schema'
 import { revalidatePath } from 'next/cache'
-import { signOut as nexAuthSignOut } from '@/lib/auth'
-import { redirect } from 'next/navigation'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { eq } from 'drizzle-orm'
 
@@ -64,12 +62,6 @@ export const updateStoreItem = async (id: number, name: string) => {
 export const deleteStoreItem = async (id: number) => {
     await db.delete(products).where(eq(products.id, id))
     revalidatePath('/dashboard')
-}
-
-export const signOut = async () => {
-    await nexAuthSignOut()
-    revalidatePath('/')
-    redirect('/')
 }
 
 async function uploadFileToS3(file: Buffer, fileName: string) {
