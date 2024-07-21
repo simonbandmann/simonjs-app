@@ -1,25 +1,20 @@
 'use client'
 
 import React from 'react'
-import Button from '@/components/Button'
-import TextArea from '@/components/TextArea'
-import TextField from '@/components/TextField'
-import { addPost } from '@/actions'
+import TextArea from '@/components/ui/TextArea'
+import TextField from '@/components/ui/TextField'
+import SubmitButton from './SubmitButton'
+import { addPostAction } from '@/actions'
 
-const AddPostForm = ({ onClose }: { onClose: () => void }) => {
+const AddPostForm = () => {
     return (
-        <form
-            className='base-form'
-            action={addPost}
-            onSubmit={() => {
-                onClose()
-            }}
-        >
+        <form className='base-form' action={addPostAction}>
             <TextField
-                id='name'
-                label='Item name'
+                id='title'
+                label='Post name'
                 type='text'
-                placeholder='Item name...'
+                placeholder='Post name...'
+                required
             />
             <TextArea
                 id='content'
@@ -30,10 +25,14 @@ const AddPostForm = ({ onClose }: { onClose: () => void }) => {
             <label htmlFor='image' className='base-input-label'>
                 Image
             </label>
-            <input id='image' name='image' type='file' accept='/image/*' />
-            <Button type='submit' variant='primary'>
-                Add post
-            </Button>
+            <input
+                id='image'
+                name='image'
+                type='file'
+                accept='/image/*'
+                // required
+            />
+            <SubmitButton />
         </form>
     )
 }

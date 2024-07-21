@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'standalone',
     images: {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: process.env.NEXT_AWS_URL,
+                hostname: process.env.CMS_BASE_HOSTNAME,
             },
         ],
     },

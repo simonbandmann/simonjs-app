@@ -26,7 +26,7 @@ const Content = ({
     description,
     children,
 }: {
-    title: string
+    title?: string
     description?: string
     children: ReactNode
 }) => {
@@ -34,7 +34,7 @@ const Content = ({
         <RadixDialog.Portal>
             <RadixDialog.Overlay className='dialog-overlay' />
             <RadixDialog.Content className='dialog-content'>
-                <RadixDialog.Title>{title}</RadixDialog.Title>
+                {title !== '' && <RadixDialog.Title>{title}</RadixDialog.Title>}
                 <RadixDialog.Description>{description}</RadixDialog.Description>
                 {children}
                 <RadixDialog.Close className='dialog-close-button'>

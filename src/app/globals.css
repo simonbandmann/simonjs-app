@@ -234,7 +234,6 @@ a {
 
 .mobile-navigation-toggle {
   display: block;
-  /* position: absolute; */
   top: 32px;
   right: 32px;
   width: 32px;
@@ -297,7 +296,6 @@ a {
 
 .base-input-label {
   font-size: 0.9rem;
-
 }
 
 .base-input-field {
@@ -314,10 +312,10 @@ a {
 
 .button {
   font-family: unset;
-  font-size: unset;
+  font-size: 1rem;
   color: rgb(var(--contrast-text));
   font-weight: 700;
-  padding: 0.8rem 1.5rem;
+  padding: 0.4rem 1.2rem;
   border-radius: 0.5rem;
   border: none;
 }
@@ -407,3 +405,36 @@ a {
   justify-content: space-between;
 }
 
+/* Post */
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  border-bottom: 1px solid rgb(159, 159, 159);
+  padding: 2rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.post-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+.post-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* Projects */
+
+.scene-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 99;
+}

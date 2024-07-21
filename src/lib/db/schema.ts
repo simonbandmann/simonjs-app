@@ -54,16 +54,11 @@ export const verificationTokens = sqliteTable(
     }),
 )
 
-export const products = sqliteTable('product', {
-    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-    name: text('name'),
-    image: text('image', { mode: 'json' }).$type<string[]>(),
-    description: text('description'),
-})
-
 export const posts = sqliteTable('posts', {
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     name: text('name'),
     images: text('images', { mode: 'json' }).$type<string[]>(),
     content: text('content'),
 })
+
+export type Post = typeof posts.$inferInsert

@@ -1,8 +1,8 @@
 'use client'
 
-import Dialog from '@/components/Dialog'
+import Dialog from '@/components/ui/Dialog'
 import { useState } from 'react'
-import Button from './Button'
+import Button from './ui/Button'
 import AddPostForm from './AddPostForm'
 
 const AddPostDialog = () => {
@@ -14,7 +14,7 @@ const AddPostDialog = () => {
                 <Button variant='primary'>Add new post</Button>
             </Dialog.Trigger>
             <Dialog.Content title='Add new blog post'>
-                <AddPostForm onClose={() => setOpen(false)} />
+                <AddPostForm />
             </Dialog.Content>
         </Dialog>
     )

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ReactNode } from 'react'
-import NavigationMenu from '@/components/NavigationMenu'
+import NavigationMenu from '@/components/ui/NavigationMenu'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 

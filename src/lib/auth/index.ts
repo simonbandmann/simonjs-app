@@ -32,5 +32,9 @@ export const authOptions: AuthOptions = {
             }
             return false
         },
+        session: async ({ session, user }) => {
+            session.user.id = user.id
+            return session
+        },
     },
 }
