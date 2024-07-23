@@ -1,8 +1,8 @@
-import AddPostDialog from '@/components/AddPostDialog'
 import BlogPosts from '@/components/BlogPosts'
 import { getBlogPosts } from '@/helpers/fetchers'
 import { authOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
+import Link from 'next/link'
 
 const Page = async () => {
     const posts = (await getBlogPosts())?.data
@@ -11,7 +11,11 @@ const Page = async () => {
     if (posts) {
         return (
             <>
-                {session ? <AddPostDialog /> : null}
+                {session ? (
+                    <Link href='/add' className='button button-primary'>
+                        Add post
+                    </Link>
+                ) : null}
                 <BlogPosts posts={posts} session={session} />
             </>
         )

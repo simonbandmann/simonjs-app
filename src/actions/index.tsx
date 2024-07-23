@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { z } from 'zod'
+import { redirect } from 'next/navigation'
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50 megabytes in bytes
 
@@ -27,18 +28,19 @@ export const addPostAction = async (formData: FormData) => {
 
     const postSchema = z.object({
         title: z.string().min(1),
-        imageFile: z
+        imageFiles: z
             .instanceof(File)
             .refine((file) => file.size <= MAX_FILE_SIZE, {
                 message: `File size must be less than or equal to ${MAX_FILE_SIZE / (1024 * 1024)} megabytes`,
-            }),
+            })
+            .array(),
     })
 
     type Post = z.infer<typeof postSchema>
 
     const post: Post = {
         title: formData.get('title') as string,
-        imageFile: formData.get('image') as File,
+        imageFiles: formData.getAll('images') as File[],
     }
 
     const validationResult = postSchema.safeParse(post)
@@ -47,17 +49,17 @@ export const addPostAction = async (formData: FormData) => {
         console.error(validationResult.error.errors)
         return
     } else {
-        console.log('File is valid:', validationResult.data)
+        console.log('File is valid')
     }
 
     const sanitizedFormData = new FormData()
     sanitizedFormData.append('data', JSON.stringify(post))
-    if (post.imageFile.size > 0) {
-        sanitizedFormData.append(
-            'files.images',
-            post.imageFile,
-            post.imageFile.name,
-        )
+
+    for (const file of post.imageFiles) {
+        console.log('checking', file.name)
+        if (file.size > 0) {
+            sanitizedFormData.append('files.images', file, file.name)
+        }
     }
 
     try {
@@ -68,9 +70,11 @@ export const addPostAction = async (formData: FormData) => {
             },
             body: sanitizedFormData,
         })
-        revalidatePath('/blog')
     } catch (err) {
         console.log(err)
+        return null
+    } finally {
+        redirect('/')
     }
 }
 
@@ -121,7 +125,7 @@ export const editPostAction = async (postId: number, formData: FormData) => {
             },
             body: sanitizedFormData,
         })
-        revalidatePath('/blog')
+        redirect('/')
     } catch (err) {
         console.log(err)
     }

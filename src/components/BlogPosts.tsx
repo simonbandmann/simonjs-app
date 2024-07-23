@@ -13,7 +13,7 @@ export default async function BlogPosts({
     return (
         <div>
             {posts.map((post: any) => {
-                const image = post.attributes?.images?.data?.[0].attributes
+                const images = post.attributes?.images?.data
 
                 const editPostData = {
                     id: post.id,
@@ -25,16 +25,28 @@ export default async function BlogPosts({
                 return (
                     <div key={post.id} className='post'>
                         {post.attributes.title}
-                        {image && (
-                            <Image
-                                src={`${process.env.NEXT_PUBLIC_CMS_BASE_URL}${image.url}`}
-                                alt={image.name}
-                                sizes='100vw'
-                                width={image.width}
-                                height={image.height}
-                                className='post-image-wrapper'
-                            />
-                        )}
+                        {images.length > 0 &&
+                            images.map(
+                                ({
+                                    id,
+                                    attributes,
+                                }: {
+                                    id: any
+                                    attributes: any
+                                }) => {
+                                    return (
+                                        <Image
+                                            key={id}
+                                            src={`${process.env.NEXT_PUBLIC_CMS_BASE_URL}${attributes.url}`}
+                                            alt={attributes.name}
+                                            sizes='100vw'
+                                            width={attributes.width}
+                                            height={attributes.height}
+                                            className='post-image-wrapper'
+                                        />
+                                    )
+                                },
+                            )}
 
                         {session ? (
                             <div className='post-actions'>

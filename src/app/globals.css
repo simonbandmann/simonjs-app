@@ -313,7 +313,6 @@ a {
 .button {
   font-family: unset;
   font-size: 1rem;
-  color: rgb(var(--contrast-text));
   font-weight: 700;
   padding: 0.4rem 1.2rem;
   border-radius: 0.5rem;
@@ -325,6 +324,7 @@ a {
 }
 
 .button-primary {
+  color: rgb(var(--contrast-text));
   background-color: rgba(var(--primary), 1);
 }
 
@@ -412,10 +412,13 @@ a {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  border-bottom: 1px solid rgb(159, 159, 159);
   padding: 2rem 0;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.post:not(:last-of-type) {
+  border-bottom: 1px solid rgba(var(--foreground), 0.5);
 }
 
 .post-image-wrapper {

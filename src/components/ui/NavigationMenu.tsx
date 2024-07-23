@@ -45,6 +45,8 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
             : NAV_ITEMS.filter(({ requireAuth }) => !requireAuth)
     }, [hasAuth])
 
+    const shouldShowNav = navItemsToRender.length > 1
+
     return (
         <header className='header'>
             <div className='top-container'>
@@ -55,23 +57,25 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                     </Link>
                 </div>
 
-                <div ref={ref} className='navigation-wrapper'>
-                    <nav
-                        id='primary-navigation'
-                        className='navigation-container'
-                        data-open={open}
-                    >
-                        <ul className='navigation-list'>
-                            {navItemsToRender.map(({ text, href }) => (
-                                <NavigationItem
-                                    key={text}
-                                    text={text}
-                                    href={href}
-                                />
-                            ))}
-                        </ul>
-                    </nav>
-                </div>
+                {shouldShowNav && (
+                    <div ref={ref} className='navigation-wrapper'>
+                        <nav
+                            id='primary-navigation'
+                            className='navigation-container'
+                            data-open={open}
+                        >
+                            <ul className='navigation-list'>
+                                {navItemsToRender.map(({ text, href }) => (
+                                    <NavigationItem
+                                        key={text}
+                                        text={text}
+                                        href={href}
+                                    />
+                                ))}
+                            </ul>
+                        </nav>
+                    </div>
+                )}
 
                 <div className='top-right-container'>
                     <div className='profile-container'>
@@ -93,15 +97,17 @@ const NavigationMenu = ({ user }: NavigationMenuProps) => {
                             </Link>
                         )}
                     </div>
-                    <button
-                        onClick={onMenuToggle}
-                        className='mobile-navigation-toggle'
-                        aria-controls='primary-navigation'
-                        aria-expanded={open}
-                    >
-                        {open ? <Close /> : <Bars />}
-                        <span className='sr-only'>Menu</span>
-                    </button>
+                    {shouldShowNav && (
+                        <button
+                            onClick={onMenuToggle}
+                            className='mobile-navigation-toggle'
+                            aria-controls='primary-navigation'
+                            aria-expanded={open}
+                        >
+                            {open ? <Close /> : <Bars />}
+                            <span className='sr-only'>Menu</span>
+                        </button>
+                    )}
                 </div>
             </div>
         </header>
